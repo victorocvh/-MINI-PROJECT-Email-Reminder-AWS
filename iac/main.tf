@@ -15,3 +15,7 @@ module "ses" {
   sender_email    = "victor.ocv+sender@hotmail.com"
   receiver_email  = "victor.ocv+receiver@hotmail.com"
 }
+
+module "email_reminder" {
+  source = "./email_reminder_lambda_module"
+}

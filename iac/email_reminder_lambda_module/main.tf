@@ -19,9 +19,20 @@ resource "aws_iam_role" "lambda_role" {
     }
 }
 
-resource "aws_lambda_function" "email_reminder" {
-    name        = "email_reminder_lambda"
-    runtime     = "python3.9"
-    role        = aws_iam_role.lambda_role.arn
-    filename    = 
+data "archive_file" "lambda" {
+    type        = "zip"
+    source_file = "${path.module}/code/lambda_fn.py"
+    output_path = "${path.module}/code/lambda.zip"
 }
+
+resource "aws_lambda_function" "email_reminder" {
+
+    function_name       = "email_reminder_lambda"
+    filename            = "${path.module}/code/lambda.zip"
+    runtime             = "python3.11"
+    role                = aws_iam_role.lambda_role.arn
+    handler             = "lambda_handler"
+    architectures       = ["x86_64"]
+    source_code_hash    = data.archive_file.lambda.output_base64sha256
+}
+
