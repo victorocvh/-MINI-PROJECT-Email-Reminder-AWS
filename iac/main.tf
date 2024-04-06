@@ -19,3 +19,14 @@ module "ses" {
 module "email_reminder" {
   source = "./email_reminder_lambda_module"
 }
+
+module "state_machine" {
+  source                = "./state_machine_module"
+  lambda_arn_to_invoke  = "${module.email_reminder.email_reminder_lambda_arn}"
+}
+
+module "api_lambda" {
+  source            = "./api_lambda_module"
+  state_machine_arn = "${module.state_machine.state_machine_arn}"
+  email_reminder_lambda_arn  = "${module.email_reminder.email_reminder_lambda_arn}"
+}
