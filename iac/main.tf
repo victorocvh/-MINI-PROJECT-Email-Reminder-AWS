@@ -28,5 +28,4 @@ module "state_machine" {
 module "api_lambda" {
   source            = "./api_lambda_module"
   state_machine_arn = "${module.state_machine.state_machine_arn}"
-  email_reminder_lambda_arn  = "${module.email_reminder.email_reminder_lambda_arn}"
 }

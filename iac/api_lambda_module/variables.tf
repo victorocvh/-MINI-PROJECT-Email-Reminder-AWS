@@ -4,6 +4,3 @@ variable "state_machine_arn" {
     type    = string
 }
 
-variable "email_reminder_lambda_arn" {
-    type    = string
-}
