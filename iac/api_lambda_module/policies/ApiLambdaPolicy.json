@@ -1,0 +1,18 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "states:*",
+                "sns:*",
+                "logs:CreateLogStream",
+                "ses:*",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents"
+            ],
+            "Effect": "Allow",
+            "Resource": "*",
+            "Sid": "VisualEditor0"
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "VisualEditor0",
+			"Effect": "Allow",
+			"Action": [
+				"sns:*",
+				"logs:DescribeLogGroups",
+				"lambda:InvokeFunction",
+				"logs:CreateLogGroup",
+				"logs:GetLogDelivery",
+				"logs:PutLogEvents",
+				"logs:ListLogDeliveries",
+				"logs:CreateLogDelivery",
+				"logs:CreateLogStream",
+				"logs:PutResourcePolicy",
+				"logs:UpdateLogDelivery",
+				"logs:DeleteLogDelivery",
+				"logs:DescribeResourcePolicies"
+			],
+			"Resource": "*"
+		}
+	]
+}
