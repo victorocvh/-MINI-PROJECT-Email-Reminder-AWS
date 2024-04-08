@@ -12,7 +12,7 @@ def lambda_handler(event, context):
         Destination={'ToAddresses': [event['Input']['email']]},
         Message={
             'Subject': {'Data': 'WhiskerCommands You to attend!'},
-            'Body': {'Text': {'Data': event['input']['message']}}
+            'Body': {'Text': {'Data': event['Input']['message']}}
         }
     )
 

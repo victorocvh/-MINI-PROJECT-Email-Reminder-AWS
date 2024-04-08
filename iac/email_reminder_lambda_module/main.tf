@@ -33,7 +33,7 @@ resource "aws_lambda_function" "email_reminder" {
     filename           = "${path.module}/code/lambda.zip"  # Arquivo ZIP contendo o código do Lambda
     runtime            = "python3.11"  # Tempo de execução do Lambda
     role               = aws_iam_role.lambda_role.arn  # ARN da role IAM que permite que o Lambda assuma
-    handler            = "lambda_handler"  # Função de manipulador Lambda
+    handler            = "lambda_fn.lambda_handler"  # Função de manipulador Lambda
     architectures      = ["x86_64"]  # Arquitetura da função Lambda
     source_code_hash   = data.archive_file.lambda.output_base64sha256  # Hash do código-fonte
 }

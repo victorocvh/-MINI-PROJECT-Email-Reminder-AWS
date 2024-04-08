@@ -14,7 +14,7 @@ resource "aws_iam_role" "api_lambda_role" {
         "Statement" : [{
             "Effect"    : "Allow",
             "Principal" : {
-                "Service" : "lambda.amazonaws.com"
+                "Service" : "lambda.amazonaws.com",
             },
             "Action"    : "sts:AssumeRole"
         }]
@@ -38,7 +38,7 @@ resource "aws_lambda_function" "api_lambda" {
 
     filename         = "${path.module}/code/lambda.zip"
     function_name    = "api_lambda"
-    handler          = "lambda_handler"
+    handler          = "lambda_fn.lambda_handler"
     role             = aws_iam_role.api_lambda_role.arn 
     runtime          = "python3.11"
     source_code_hash = data.archive_file.api_lambda_file.output_base64sha256
@@ -50,6 +50,17 @@ resource "aws_lambda_function" "api_lambda" {
       }
     }
 }
+
+resource "aws_lambda_permission" "allow_apigateway" {
+  statement_id  = "AllowExecutionFromApiGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.api_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.api_rest.execution_arn}/*"
+
+  depends_on = [aws_api_gateway_rest_api.api_rest]
+}
+
 
 resource "aws_api_gateway_rest_api" "api_rest" {
   name  = "petcuddleotron"
@@ -70,7 +81,25 @@ resource "aws_api_gateway_method" "post_api_rest_method" {
     resource_id   = aws_api_gateway_resource.api_rest_resource.id
     http_method   = "POST"
     authorization = "NONE"
+}
 
+resource "aws_api_gateway_method" "options_method" {
+  rest_api_id   = aws_api_gateway_rest_api.api_rest.id
+  resource_id   = aws_api_gateway_resource.api_rest_resource.id
+  http_method   = "OPTIONS"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "options_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.api_rest.id
+  resource_id             = aws_api_gateway_resource.api_rest_resource.id
+  http_method             = aws_api_gateway_method.options_method.http_method 
+  type                    = "MOCK"
+  request_templates       = {
+    "application/json" = jsonencode({
+      statusCode = 200
+    })
+  }
 }
 
 resource "aws_api_gateway_integration" "post_api_lambda_integration" {
@@ -80,7 +109,43 @@ resource "aws_api_gateway_integration" "post_api_lambda_integration" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.api_lambda.invoke_arn 
+
+  depends_on = [aws_api_gateway_method.post_api_rest_method]
 }
+
+resource "aws_api_gateway_method_response" "response_options" {
+  rest_api_id   = aws_api_gateway_rest_api.api_rest.id
+  resource_id   = aws_api_gateway_resource.api_rest_resource.id
+  http_method   = aws_api_gateway_method.options_method.http_method 
+  status_code = 200
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Headers" = true
+  }
+}
+
+resource "aws_api_gateway_integration_response" "response_options" {
+  rest_api_id = aws_api_gateway_rest_api.api_rest.id
+  resource_id = aws_api_gateway_resource.api_rest_resource.id
+  http_method = aws_api_gateway_method.options_method.http_method
+  status_code = aws_api_gateway_method_response.response_options.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+    "method.response.header.Access-Control-Allow-Methods" = "'*'"
+    "method.response.header.Access-Control-Allow-Headers" = "'*'"
+  }
+
+  depends_on = [
+    aws_api_gateway_method_response.response_options,
+    aws_api_gateway_method.options_method,
+    aws_api_gateway_resource.api_rest_resource,
+    aws_api_gateway_rest_api.api_rest
+    ]
+}
+
+
 
 resource "aws_api_gateway_deployment" "api_deployment" {
   rest_api_id     = aws_api_gateway_rest_api.api_rest.id 
@@ -93,6 +158,9 @@ resource "aws_api_gateway_deployment" "api_deployment" {
   lifecycle {
     create_before_destroy = true
   }
+
+  depends_on = [aws_api_gateway_method.post_api_rest_method
+  ,aws_api_gateway_integration.post_api_lambda_integration]
 }
 
 resource "aws_api_gateway_stage" "api_prod_stage" {

@@ -8,6 +8,7 @@ terraform {
 }
 
 provider "aws" {
+  region = "us-east-1"
 }
 
 module "ses" {
@@ -28,4 +29,8 @@ module "state_machine" {
 module "api_lambda" {
   source            = "./api_lambda_module"
   state_machine_arn = "${module.state_machine.state_machine_arn}"
+}
+
+module "frontend_module" {
+  source      = "./frontend_module"
 }
