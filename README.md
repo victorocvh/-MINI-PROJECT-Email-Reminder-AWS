@@ -1,7 +1,7 @@
-# [Mini-Project] Pet Cuddle o Tron
+# [Mini-Project] Email Reminder
 
-###  Descrição
-Este projeto iremos criar toda essa arquitetura abaixo com terraform! Utilizaremos o terraform para provisionar o nosso código na cloud, subir nosso website statico. Objetivo do projeto: Enviar e-mail de notificação de lembrete baseado no tempo estimado pelo front. 
+###  Cenário
+Uma empresa solicitou que após certo tempo (tempo definido pelo usuário) um lembrete fosse enviado para o e-mail escolhido pelo usuário para lembra-lo de fazer alguma tarefa importante. Foi exigido que você use aplicações serve-less pois a empresa não gostaria de lidar com servidores.
     
 ### Arquitetura
 ![Alt text](./assets/arquitetura.png "Title")

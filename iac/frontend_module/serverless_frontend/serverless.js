@@ -2,7 +2,6 @@
 const STATIC_ENDPOINT = 'petcuddleotron';
 var CHANGE_ENDPOINT = 'https://wnacr2ewfb.execute-api.us-east-1.amazonaws.com/prod';
 var API_ENDPOINT = `${CHANGE_ENDPOINT}/${STATIC_ENDPOINT}`;
-// if correct it should be similar to https://somethingsomething.execute-api.us-east-1.amazonaws.com/prod/petcuddleotron
 
 var errorDiv = document.getElementById('error-message')
 var successDiv = document.getElementById('success-message')
