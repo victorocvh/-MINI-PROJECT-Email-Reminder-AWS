@@ -1,7 +1,7 @@
 # [Mini-Project] Email Reminder
 
 ###  Cenário
-Uma empresa solicitou que após certo tempo (tempo definido pelo usuário) um lembrete fosse enviado para o e-mail escolhido pelo usuário para lembra-lo de fazer alguma tarefa importante. Foi exigido que você use aplicações serve-less pois a empresa não gostaria de lidar com servidores.
+Uma empresa solicitou que após certo tempo (tempo definido pelo usuário) um lembrete fosse enviado para o e-mail escolhido pelo usuário para lembra-lo de fazer alguma tarefa importante. Foi exigido que você use aplicações serve-less pois a empresa não gostaria de lidar com servidores. Tambêm foi exigido o uso de terraform caso eles decidam migrar essa arquitetura para uma outra conta futuramente ou queiram mudar algo de maneira rápida.
     
 ### Arquitetura
 ![Alt text](./assets/arquitetura.png "Title")
