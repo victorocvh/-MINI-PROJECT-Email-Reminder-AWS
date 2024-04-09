@@ -1,8 +1,9 @@
 # [Mini-Project] Pet Cuddle o Tron
 
-####  Descrição
+###  Descrição
 Este projeto iremos criar toda essa arquitetura abaixo com terraform! Utilizaremos o terraform para provisionar o nosso código na cloud, subir nosso website statico. Objetivo do projeto: Enviar e-mail de notificação de lembrete baseado no tempo estimado pelo front. 
     
+### Arquitetura
 ![Alt text](./assets/arquitetura.png "Title")
 
 Dentro da pasta `iac`temos nossos módulos terraform cada módulo é responsável por subir uma parte da arquitetura dentro da aws.
@@ -14,3 +15,21 @@ O módulo `email_remindar_lambda` ele recebe um e-mail e envia uma notificação
 O módulo `api_lambda_module` provisiona um endpoint api gateway post, e um api lambda que vai ser invocado pelo api gateway. Toda vez que uma chamada de api é feita para o api gateway ele recebe a requisição.
 
 O módulo `frontend_module` cria um bucket website stático e sobe os arquivos javascript e html necessários para rodar uma simples aplicação frontend.
+
+### Como Executar
+
+1 - Você precisa configurar suas credências `access_key` e `secret_key` da aws no arquivo `./iac/main.tf` 
+
+2 - Rodar dentro da pasta `iac` o comando
+
+    terraform apply
+
+3 - Se tudo ocorrer bem você verá na saida outputs terraform com o link do `api_gateway_output` e o link com o `static_website_link` como mostra o print abaixo:
+
+![Alt text](./assets/output_terraform.png "Title")
+
+4 - Copie o link do `api_gateway_output`, e altere esse link dentro da pasta `./iac/frontend_module/serveless_frontend` no arquivo `serveless.js` na variavel `CHANGE_ENDPOINT`.
+
+5 - Apos isso rode o comando pelo terminal, dentro da pasta `iac` para atualizar somente o módulo de frontend.
+    
+    terraform apply -target=module.frontend_module
