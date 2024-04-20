@@ -10,11 +10,11 @@ Dentro da pasta `iac`temos nossos módulos terraform cada módulo é responsáve
 
 O módulo `state_machine_module` provisiona o step function que recebe uma requisição do api lambda com um payload indicando o email a receber a notificação e o tempo de espera do lembrete.
 
-O módulo `email_remindar_lambda` ele recebe um e-mail e envia uma notificação para o e-mail selecionado! 
+O módulo `email_reminder_lambda` ele recebe um e-mail e envia uma notificação para o e-mail selecionado! 
 
-O módulo `api_lambda_module` provisiona um endpoint api gateway post, e um api lambda que vai ser invocado pelo api gateway. Toda vez que uma chamada de api é feita para o api gateway ele recebe a requisição.
+O módulo `api_lambda_module` cria um endpoint API Gateway POST juntamente com uma função lambda associada. Sempre que uma chamada de API é feita para esse endpoint, o API Gateway recebe a requisição e a encaminha para a função lambda correspondente para processamento.
 
-O módulo `frontend_module` cria um bucket website stático e sobe os arquivos javascript e html necessários para rodar uma simples aplicação frontend.
+O módulo `frontend_module` cria um bucket website estático e sobe os arquivos javascript e html necessários para rodar uma simples aplicação frontend que se comunica com o endpoint do `api gateway`.
 
 ### Configuração Necessária
 
@@ -43,12 +43,12 @@ provider "aws" {
 
     terraform apply
 
-4 - Se tudo ocorrer bem você verá na saida outputs terraform com o link do `api_gateway_output` e o link com o `static_website_link` como mostra o print abaixo:
+PRONTO!! APLICAÇÃO PRONTA PARA TESTE!
 
-![Alt text](./assets/output_terraform.png "Title")
+# Como Testar a Aplicação
 
-4 - Copie o link do `api_gateway_output`, e altere esse link dentro da pasta `./iac/frontend_module/serveless_frontend` no arquivo `serveless.js` na variavel `CHANGE_ENDPOINT`.
+1 - Verifique os e-mails da AWS, se você configurou corretamente na etapa de `Configurações Necessárias` você pode ir nos dois e-mails que você colocou, e clicar em um link da AWS que deve ter chegado para vocês. (Verifique no spam)
 
-5 - Apos isso rode o comando pelo terminal, dentro da pasta `iac` para atualizar somente o módulo de frontend.
-    
-    terraform apply -target=module.frontend_module
+2 - Agora acesse o link de output do terraform exemplo `petcuddleotron-95dxas65x92sad9.s3-website-us-east-1.amazonaws.com`
+
+3 - Depois de acessar o link você poderá testar a aplicação enviando uma notificação para você mesmo com uma mensagem!
