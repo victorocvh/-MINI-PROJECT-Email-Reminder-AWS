@@ -16,7 +16,7 @@ O módulo `api_lambda_module` cria um endpoint API Gateway POST juntamente com u
 
 O módulo `frontend_module` cria um bucket website estático e sobe os arquivos javascript e html necessários para rodar uma simples aplicação frontend que se comunica com o endpoint do `api gateway`.
 
-### Configuração Necessária
+## Configuração Necessária
 
 1 - Você precisa configurar suas credênciais `access_key` e `secret_key` da aws no arquivo `./iac/main.tf` segue exemplo abaixo:
 
@@ -30,7 +30,7 @@ provider "aws" {
 
 2 - Substitua as variaveis `@EMAIL_SENDER` e `@EMAIL_RECEIVER` localizadas no arquivo `./iac/main.tf` por dois emails que você tenha acesso a visualizar e validar.
 
-# Como Executar
+## Como Executar
 1 - Rodar dentro da pasta `./iac` o comando
 
     terraform init
@@ -45,10 +45,19 @@ provider "aws" {
 
 PRONTO!! APLICAÇÃO PRONTA PARA TESTE!
 
-# Como Testar a Aplicação
+## Como Testar a Aplicação
 
-1 - Verifique os e-mails da AWS, se você configurou corretamente na etapa de `Configurações Necessárias` você pode ir nos dois e-mails que você colocou, e clicar em um link da AWS que deve ter chegado para vocês. (Verifique no spam)
+1 - Verifique os e-mails da AWS, se você configurou corretamente na etapa de `Configurações Necessárias` você pode ir nos dois e-mails que você colocou, e clicar em um link da AWS que deve ter chegado para vocês. (Verifique no spam) 
+  
+Print Exemplo:
+
+![Alt text](./assets/printmail.png "Title")
 
 2 - Agora acesse o link de output do terraform exemplo `petcuddleotron-95dxas65x92sad9.s3-website-us-east-1.amazonaws.com`
 
-3 - Depois de acessar o link você poderá testar a aplicação enviando uma notificação para você mesmo com uma mensagem!
+3 - Depois de acessar o link você poderá testar a aplicação enviando uma notificação `SOMENTE PARA OS EMAILS QUE VOCÊ CADASTROU COMO SENDER E RECEIVER`! 
+
+Você irá conseguir acompanhar depois que fizer o envio da notificação pelo frontend o estado do wait-time e do e-mail enviado.
+
+![Alt text](./assets/image.png "Title")
+

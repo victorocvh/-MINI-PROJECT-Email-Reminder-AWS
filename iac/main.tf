@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "5.44.0"
     }
   }
@@ -12,9 +12,9 @@ provider "aws" {
 }
 
 module "ses" {
-  source          = "./ses_module"
-  sender_email    = "victor.ocv+sender@hotmail.com"
-  receiver_email  = "victor.ocv+receiver@hotmail.com"
+  source         = "./ses_module"
+  sender_email   = "@EMAIL_SENDER"
+  receiver_email = "@EMAIL_RECEIVER"
 }
 
 module "email_reminder" {
@@ -22,17 +22,17 @@ module "email_reminder" {
 }
 
 module "state_machine" {
-  source                = "./state_machine_module"
-  lambda_arn_to_invoke  = "${module.email_reminder.email_reminder_lambda_arn}"
+  source               = "./state_machine_module"
+  lambda_arn_to_invoke = module.email_reminder.email_reminder_lambda_arn
 }
 
 module "api_lambda" {
   source            = "./api_lambda_module"
-  state_machine_arn = "${module.state_machine.state_machine_arn}"
+  state_machine_arn = module.state_machine.state_machine_arn
 }
 
 module "frontend_module" {
-  source      = "./frontend_module"
+  source                 = "./frontend_module"
   api_gateway_invoke_url = module.api_lambda.api_gateway_invoke_url
-  depends_on = [module.api_lambda]
+  depends_on             = [module.api_lambda]
 }
