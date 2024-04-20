@@ -1,7 +1,7 @@
 
 const STATIC_ENDPOINT = 'petcuddleotron';
-var CHANGE_ENDPOINT = 'https://wnacr2ewfb.execute-api.us-east-1.amazonaws.com/prod';
-var API_ENDPOINT = `${CHANGE_ENDPOINT}/${STATIC_ENDPOINT}`;
+var CHANGE_ENDPOINT = '${replace_endpoint}';
+var API_ENDPOINT = CHANGE_ENDPOINT + '/' + STATIC_ENDPOINT;
 
 var errorDiv = document.getElementById('error-message')
 var successDiv = document.getElementById('success-message')
@@ -19,13 +19,13 @@ function clearNotifications() {
 }
 
 // When buttons are clicked, this is run passing values to API Gateway call
-document.getElementById('emailButton').addEventListener('click', function(e) { sendData(e, 'email'); });
+document.getElementById('emailButton').addEventListener('click', function (e) { sendData(e, 'email'); });
 
-function sendData (e, pref) {
+function sendData(e, pref) {
     e.preventDefault()
     clearNotifications()
     fetch(API_ENDPOINT, {
-        headers:{
+        headers: {
             "Content-type": "application/json"
         },
         method: 'POST',
@@ -36,14 +36,14 @@ function sendData (e, pref) {
         }),
         mode: 'no-cors'
     })
-    .then((resp) => resp.json())
-    .then(function(data) {
-        console.log(data)
-        successDiv.textContent = 'Submitted. But check the result below!';
-        resultsDiv.textContent = JSON.stringify(data);
-    })
-    .catch(function(err) {
-        errorDiv.textContent = 'Oops! Error Error:\n' + err.toString();
-        console.log(err)
-    });
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data)
+            successDiv.textContent = 'Submitted. But check the result below!';
+            resultsDiv.textContent = JSON.stringify(data);
+        })
+        .catch(function (err) {
+            errorDiv.textContent = 'Oops! Error Error:\n' + err.toString();
+            console.log(err)
+        });
 };

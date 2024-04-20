@@ -15,16 +15,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.1/fetch.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <!-- Custom styles -->
-    <link href="main.css" rel="stylesheet">
+    <link href="./main.css" rel="stylesheet">
   </head>
   <body>
     <div class="container">
       <form class="form-signin">
         <img class="d-block w-100" src="./whiskers.png" alt="the boss">
-        <center><h2 class="form-signin-heading">Pet Cuddle-O-Tron</h2></center>
-        <center><h3 class="form-signin-heading">^^ Whiskers Commands You!! ^^</h3></center>
-        <div id='error-message'></div>
-        <div id='success-message'></div>
+        <div><h2 class="form-signin-heading">Pet Cuddle-O-Tron</h2></div>
+        <div><h3 class="form-signin-heading">^^ Whiskers Commands You!! ^^</h3></div>
+        <div id="error-message"></div>
+        <div id="success-message"></div>
         <label for="waitSeconds" class="sr-only"></label>
         <p>These are always needed:</p>
         <input type="text" id="waitSeconds" class="form-control" placeholder="How long until the next cuddle (in seconds) ....">
@@ -37,7 +37,7 @@
         <hr>
         <h3>Human Minion Hailing Control<br><br></h3>
         <button id="emailButton" class="btn btn-md btn-primary btn-block" type="submit">Email Minion</button>
-        <div id='results-message'></div>
+        <div id="results-message"></div>
       </form>
     </div> <!-- /container -->
     <script src="serverless.js"></script>

@@ -13,8 +13,8 @@ provider "aws" {
 
 module "ses" {
   source          = "./ses_module"
-  sender_email    = "@EMAIL_SENDER"
-  receiver_email  = "@EMAIL_RECEIVER"
+  sender_email    = "victor.ocv+sender@hotmail.com"
+  receiver_email  = "victor.ocv+receiver@hotmail.com"
 }
 
 module "email_reminder" {
@@ -33,4 +33,6 @@ module "api_lambda" {
 
 module "frontend_module" {
   source      = "./frontend_module"
+  api_gateway_invoke_url = module.api_lambda.api_gateway_invoke_url
+  depends_on = [module.api_lambda]
 }

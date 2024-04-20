@@ -16,15 +16,34 @@ O módulo `api_lambda_module` provisiona um endpoint api gateway post, e um api 
 
 O módulo `frontend_module` cria um bucket website stático e sobe os arquivos javascript e html necessários para rodar uma simples aplicação frontend.
 
-### Como Executar
+### Configuração Necessária
 
-1 - Você precisa configurar suas credências `access_key` e `secret_key` da aws no arquivo `./iac/main.tf` 
+1 - Você precisa configurar suas credênciais `access_key` e `secret_key` da aws no arquivo `./iac/main.tf` segue exemplo abaixo:
 
-2 - Rodar dentro da pasta `iac` o comando
+```python
+provider "aws" {
+    region = "us-east-1"
+    access_key = "example"
+    secret_key = "example"
+}
+```
+
+2 - Substitua as variaveis `@EMAIL_SENDER` e `@EMAIL_RECEIVER` localizadas no arquivo `./iac/main.tf` por dois emails que você tenha acesso a visualizar e validar.
+
+# Como Executar
+1 - Rodar dentro da pasta `./iac` o comando
+
+    terraform init
+
+2 - Visualize o que será construido com:
+    
+    terraform plan
+
+3 - Aplique a construção com:
 
     terraform apply
 
-3 - Se tudo ocorrer bem você verá na saida outputs terraform com o link do `api_gateway_output` e o link com o `static_website_link` como mostra o print abaixo:
+4 - Se tudo ocorrer bem você verá na saida outputs terraform com o link do `api_gateway_output` e o link com o `static_website_link` como mostra o print abaixo:
 
 ![Alt text](./assets/output_terraform.png "Title")
 
