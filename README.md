@@ -3,7 +3,9 @@
 ###  Cenário
 Uma empresa solicitou que após certo tempo (tempo definido pelo usuário) um lembrete fosse enviado para o e-mail escolhido pelo usuário para lembra-lo de fazer alguma tarefa importante. Foi exigido que você use aplicações serve-less pois a empresa não gostaria de lidar com servidores. Tambêm foi exigido o uso de terraform caso eles decidam migrar essa arquitetura para uma outra conta futuramente ou queiram mudar algo de maneira rápida.
 
-Obs: (Este primeiro projeto é de um curso que fiz e decidi implementar com terraform para diferenciar um pouco)
+Obs 1: (Este primeiro projeto é de um curso que fiz e decidi implementar com terraform para diferenciar um pouco)
+
+Obs 2: Não é uma boa prática subir arquivos, código com terraform e sim com CI/CD mas como esse é um projeto teste, não tem problema.
     
 ### Arquitetura
 ![Alt text](./assets/arquitetura.png "Title")
